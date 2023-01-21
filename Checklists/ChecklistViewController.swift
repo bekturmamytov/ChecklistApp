@@ -51,8 +51,9 @@ class ChecklistViewController: UITableViewController {
         //I have to tell to tableview about this new row so it can add a new cell for that row.
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
-        //to insert a new row to the table view 
+        //to insert a new row to the table view
         tableView.insertRows(at: indexPaths, with: .automatic)
+        //TODO: - RECAP The data model and table view always havve to be in sync.
     }
     
     func configureChackmark(for cell: UITableViewCell, with item: ChecklistItem) {
@@ -88,6 +89,15 @@ extension ChecklistViewController {
         configureChackmark(for: cell, with: item)
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        // remove data from the array
+        items.remove(at: indexPath.row)
+        //update table view or remove row from the table view
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
 }
 
 //MARK: - Table View Delegate
@@ -104,4 +114,6 @@ extension ChecklistViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
 }
