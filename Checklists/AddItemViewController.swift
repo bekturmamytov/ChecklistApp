@@ -7,10 +7,17 @@
 
 import UIKit
 
+protocol AddItemViewControllerDelegate: AnyObject {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+}
+
 class AddItemViewController: UITableViewController {
 
     @IBOutlet weak var textFIeld: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    
+    weak var delegate: AddItemViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,21 +33,21 @@ class AddItemViewController: UITableViewController {
     }
     
     @IBAction func cancel() {
-        //this line of code tells the nav controller to close the add item screen and send to previous layer.
-        navigationController?.popViewController(animated: true)
+        delegate?.addItemViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
         
-        print("Contents of the text field: \(textFIeld.text!)")
+        let item = ChecklistItem()
+        item.text = textFIeld.text!
         
-        navigationController?.popViewController(animated: true)
+        delegate?.addItemViewController(self, didFinishAdding: item)
     }
 
 
 }
 
-//MARK: - Tabel View Delegate
+//MARK: - Table View Delegate
 
 extension AddItemViewController {
     

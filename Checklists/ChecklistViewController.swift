@@ -53,7 +53,7 @@ class ChecklistViewController: UITableViewController {
         let indexPaths = [indexPath]
         //to insert a new row to the table view
         tableView.insertRows(at: indexPaths, with: .automatic)
-        //TODO: - RECAP The data model and table view always havve to be in sync.
+        //TODO: - RECAP The data model and table view always have to be in sync.
     }
     
     func configureChackmark(for cell: UITableViewCell, with item: ChecklistItem) {
