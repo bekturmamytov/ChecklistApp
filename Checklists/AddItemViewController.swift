@@ -14,19 +14,26 @@ protocol AddItemViewControllerDelegate: AnyObject {
 }
 
 class AddItemViewController: UITableViewController {
+    
+    var itemToEdit: ChecklistItem?
 
     @IBOutlet weak var textFIeld: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     
     //2. Give object B an optional delegate variable. This variable should be weak.
+    // To avoid 'ownership cycles' you can make one of these references weak. Therefore, delegates are always made weak.
     weak var delegate: AddItemViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //to hook up textfield delegate to VC
         textFIeld.delegate = self
-        
         navigationItem.largeTitleDisplayMode = .never
+        
+        if let item = itemToEdit {
+            title = "Edit Item"
+            textFIeld.text = item.text
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

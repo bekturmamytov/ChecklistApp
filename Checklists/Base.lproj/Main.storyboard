@@ -16,27 +16,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="ChecklistItem" id="YkB-gE-oAt">
-                                <rect key="frame" x="0.0" y="50" width="320" height="43"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="YkB-gE-oAt">
+                                <rect key="frame" x="0.0" y="50" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YkB-gE-oAt" id="BgA-7s-yzG">
-                                    <rect key="frame" x="0.0" y="0.0" width="280" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="261.5" height="45"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="√" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3NG-Xf-9Rg">
+                                            <rect key="frame" x="16" y="11" width="12" height="26.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="12" id="ryU-VP-41S"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PiA-ap-FsI">
-                                            <rect key="frame" x="16" y="11" width="276" height="21"/>
+                                            <rect key="frame" x="36" y="11" width="225.5" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="PiA-ap-FsI" secondAttribute="bottom" id="FXX-QJ-E6y"/>
-                                        <constraint firstItem="PiA-ap-FsI" firstAttribute="trailing" secondItem="BgA-7s-yzG" secondAttribute="trailingMargin" constant="20" id="mUZ-Cn-teX"/>
-                                        <constraint firstItem="PiA-ap-FsI" firstAttribute="top" secondItem="BgA-7s-yzG" secondAttribute="topMargin" id="mz4-Jo-MJ7"/>
-                                        <constraint firstItem="PiA-ap-FsI" firstAttribute="leading" secondItem="BgA-7s-yzG" secondAttribute="leadingMargin" id="waN-hP-qyb"/>
+                                        <constraint firstAttribute="bottom" secondItem="PiA-ap-FsI" secondAttribute="bottom" constant="12" id="E60-0k-Xkv"/>
+                                        <constraint firstItem="PiA-ap-FsI" firstAttribute="leading" secondItem="3NG-Xf-9Rg" secondAttribute="trailing" constant="8" id="PSf-35-lVA"/>
+                                        <constraint firstAttribute="trailing" secondItem="PiA-ap-FsI" secondAttribute="trailing" id="fVE-aq-dU8"/>
+                                        <constraint firstItem="3NG-Xf-9Rg" firstAttribute="top" secondItem="BgA-7s-yzG" secondAttribute="top" constant="11" id="h6h-vY-3oc"/>
+                                        <constraint firstAttribute="bottom" secondItem="3NG-Xf-9Rg" secondAttribute="bottom" constant="7.5" id="lMh-do-gIN"/>
+                                        <constraint firstItem="3NG-Xf-9Rg" firstAttribute="leading" secondItem="BgA-7s-yzG" secondAttribute="leading" constant="16" id="nLp-pa-YhB"/>
+                                        <constraint firstItem="PiA-ap-FsI" firstAttribute="top" secondItem="BgA-7s-yzG" secondAttribute="top" constant="11" id="rKg-rf-Cwx"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Ru1-0G-A1J" kind="show" identifier="EditItem" trigger="accessoryAction" id="cFC-tv-xuY"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -54,7 +69,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oB2-1g-cPl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="630" y="-18"/>
+            <point key="canvasLocation" x="630" y="-19.014084507042252"/>
         </scene>
         <!--Add Item-->
         <scene sceneID="1J8-Yl-qoF">
@@ -142,6 +157,9 @@
             <point key="canvasLocation" x="-260.625" y="-16.901408450704224"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="cFC-tv-xuY"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

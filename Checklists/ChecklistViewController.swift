@@ -39,10 +39,13 @@ class ChecklistViewController: UITableViewController {
     }
     
     func configureChackmark(for cell: UITableViewCell, with item: ChecklistItem) {
+        // how to access the label by using tag number inside the cell.
+        let label = cell.viewWithTag(1001) as! UILabel
+        
         if item.checked {
-            cell.accessoryType = .checkmark
+            label.text = "√"
         } else {
-            cell.accessoryType = .none
+            label.text = ""
         }
     }
     
@@ -100,7 +103,7 @@ extension ChecklistViewController {
     
 }
 
-//MARK: - Add Item VC Delegate
+//MARK: - Add Item View Controller Delegate
 // 4. Make object a conform the delegate protocol.
 extension ChecklistViewController: AddItemViewControllerDelegate {
     func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
