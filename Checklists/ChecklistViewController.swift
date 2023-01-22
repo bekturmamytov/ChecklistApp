@@ -38,24 +38,6 @@ class ChecklistViewController: UITableViewController {
         items.append(item5)
     }
     
-    @IBAction func addItem() {
-        //I need to know what the index of the new row in my array.
-        let newRowIndex = items.count
-        
-        // This code creates new item from data model and adds to items array.
-        let item = ChecklistItem()
-        item.text = "I am new row"
-        item.checked = true
-        items.append(item)
-        
-        //I have to tell to tableview about this new row so it can add a new cell for that row.
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        let indexPaths = [indexPath]
-        //to insert a new row to the table view
-        tableView.insertRows(at: indexPaths, with: .automatic)
-        //TODO: - RECAP The data model and table view always have to be in sync.
-    }
-    
     func configureChackmark(for cell: UITableViewCell, with item: ChecklistItem) {
         if item.checked {
             cell.accessoryType = .checkmark
@@ -126,6 +108,15 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
     }
     
     func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
+        // configure index number in tableview
+        let newRowIndex = items.count
+        // add new item to array
+        items.append(item)
+        // add table view new row
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        //close AddI Items screen
         navigationController?.popViewController(animated: true)
     }
     
