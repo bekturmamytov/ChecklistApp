@@ -7,6 +7,7 @@
 
 import UIKit
 
+//1.Define a delegate protocol for object B
 protocol AddItemViewControllerDelegate: AnyObject {
     func addItemViewControllerDidCancel(_ controller: AddItemViewController)
     func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
@@ -17,6 +18,7 @@ class AddItemViewController: UITableViewController {
     @IBOutlet weak var textFIeld: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     
+    //2. Give object B an optional delegate variable. This variable should be weak.
     weak var delegate: AddItemViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -33,11 +35,13 @@ class AddItemViewController: UITableViewController {
     }
     
     @IBAction func cancel() {
+        //3. Update delegate when something happened (pressed button).
         delegate?.addItemViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
         
+        //3. Update delegate when something happened (pressed button).
         let item = ChecklistItem()
         item.text = textFIeld.text!
         

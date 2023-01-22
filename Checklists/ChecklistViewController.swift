@@ -117,3 +117,33 @@ extension ChecklistViewController {
     
     
 }
+
+//MARK: - Add Item VC Delegate
+// 4. Make object a conform the delegate protocol.
+extension ChecklistViewController: AddItemViewControllerDelegate {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
+}
+
+//MARK: - Navigation (send data from one view to another)
+// Tell objetc B that object A is now its delegate.
+extension ChecklistViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //1. Find a right segue address
+        if segue.identifier == "AddItem" {
+            //2. Casting the destination, becouse destination is UIViewController. AddItemVC is UIVC's subclass. This is the force (!) downcasting.
+            let controller = segue.destination as! AddItemViewController
+            //3. Set AddViewController's delegate property as self(ChecklistViewController).
+            controller.delegate = self
+            
+            //TODO: - RECAP ChecklistViewController is now delegate of AddViewController.
+        }
+    }
+}
