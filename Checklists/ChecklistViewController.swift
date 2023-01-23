@@ -132,12 +132,21 @@ extension ChecklistViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //1. Find a right segue address
         if segue.identifier == "AddItem" {
-            //2. Casting the destination, becouse destination is UIViewController. AddItemVC is UIVC's subclass. This is the force (!) downcasting.
+            //2. Casting the destination, because destination is UIViewController. AddItemVC is UIVC's subclass. This is the force (!) downcasting.
             let controller = segue.destination as! AddItemViewController
             //3. Set AddViewController's delegate property as self(ChecklistViewController).
             controller.delegate = self
             
             //TODO: - RECAP ChecklistViewController is now delegate of AddViewController.
+        } else if segue.identifier == "EditItem" {
+            let controller = segue.destination as! AddItemViewController
+            controller.delegate = self
+            
+            //indexPath() return type is optional thats why we are using if let to unwrap the optional value. Than we are casting sender (Any?) to UITableViewCell.
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                //assign to itemToEdit an item inside the items with related indexPath.row.
+                controller.itemToEdit = items[indexPath.row]
+            }
         }
     }
 }

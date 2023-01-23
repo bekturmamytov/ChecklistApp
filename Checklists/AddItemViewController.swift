@@ -30,6 +30,7 @@ class AddItemViewController: UITableViewController {
         textFIeld.delegate = self
         navigationItem.largeTitleDisplayMode = .never
         
+        // item is temporary constant, temp. constant now contains optional variable and temp. constant is only available from within this code block.
         if let item = itemToEdit {
             title = "Edit Item"
             textFIeld.text = item.text
