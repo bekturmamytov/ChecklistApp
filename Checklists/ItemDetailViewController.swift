@@ -11,6 +11,7 @@ import UIKit
 protocol AddItemViewControllerDelegate: AnyObject {
     func addItemViewControllerDidCancel(_ controller: AddItemViewController)
     func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem)
 }
 
 class AddItemViewController: UITableViewController {
@@ -34,6 +35,7 @@ class AddItemViewController: UITableViewController {
         if let item = itemToEdit {
             title = "Edit Item"
             textFIeld.text = item.text
+            doneBarButton.isEnabled = true
         }
     }
     
@@ -48,14 +50,16 @@ class AddItemViewController: UITableViewController {
     }
     
     @IBAction func done() {
-        
-        //3. Update delegate when something happened (pressed button).
-        let item = ChecklistItem()
-        item.text = textFIeld.text!
-        
-        delegate?.addItemViewController(self, didFinishAdding: item)
+        if let item = itemToEdit {
+            item.text = textFIeld.text!
+            delegate?.addItemViewController(self, didFinishEditing: item)
+        } else {
+            //3. Update delegate when something happened (pressed button).
+            let item = ChecklistItem()
+            item.text = textFIeld.text!
+            delegate?.addItemViewController(self, didFinishAdding: item)
+        }
     }
-
 
 }
 

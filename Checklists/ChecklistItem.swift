@@ -7,7 +7,8 @@
 
 import Foundation
 
-class ChecklistItem {
+//Added NSObject to satisfy equatable req.
+class ChecklistItem: NSObject {
     var text = ""
     var checked = false
 }
