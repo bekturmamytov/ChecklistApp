@@ -16,9 +16,9 @@ class ChecklistViewController: UITableViewController {
         //load items from phone memory
         loadChecklistItem()
         
-        print("DEBUG: Document folder is \(documentsDirectory())")
-        print("DEBUG: Data file path is \(dataFilePath())")
-        
+//        print("DEBUG: Document folder is \(documentsDirectory())")
+//        print("DEBUG: Data file path is \(dataFilePath())")
+//        
         
     }
     
