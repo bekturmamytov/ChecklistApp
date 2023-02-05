@@ -13,30 +13,9 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+        //load items from phone memory
+        loadChecklistItem()
         
-        let item1 = ChecklistItem()
-        item1.text = "Walk the dog"
-        items.append(item1)
-        
-        let item2 = ChecklistItem()
-        item2.text = "Brush my teeth"
-        item2.checked = true
-        items.append(item2)
-        
-        let item3 = ChecklistItem()
-        item3.text = "Learn iOS Development"
-        item3.checked = true
-        items.append(item3)
-        
-        let item4 = ChecklistItem()
-        item4.text = "Soccer practice"
-        items.append(item4)
-        
-        let item5 = ChecklistItem()
-        item5.text = "Eat ice cream"
-        item5.checked = true
-        items.append(item5)
-
         print("DEBUG: Document folder is \(documentsDirectory())")
         print("DEBUG: Data file path is \(dataFilePath())")
         
@@ -87,6 +66,8 @@ extension ChecklistViewController {
         //update table view or remove row from the table view
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
+        //save data to phone memory or delete
+        saveChecklistItems()
     }
     
 }
@@ -104,6 +85,9 @@ extension ChecklistViewController {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        //save data to phone memory
+        saveChecklistItems()
     }
     
     
@@ -127,6 +111,8 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
         tableView.insertRows(at: indexPaths, with: .automatic)
         //close AddI Items screen
         navigationController?.popViewController(animated: true)
+        //save data to phone memory
+        saveChecklistItems()
     }
     
     func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem) {
@@ -137,6 +123,8 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
             }
         }
         navigationController?.popViewController(animated: true)
+        //save data to phone memory
+        saveChecklistItems()
     }
     
     
@@ -175,7 +163,7 @@ extension ChecklistViewController {
     // Get the file path
     
     func documentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
     
@@ -199,6 +187,22 @@ extension ChecklistViewController {
         } catch {
             //6. handle the catch error.
             print("Error encoding item array: \(error.localizedDescription)")
+        }
+    }
+    
+    func loadChecklistItem() {
+        //1. put the result of dataFilePath(returns URL) to path.
+        let path = dataFilePath()
+        //2. try to load contents of .plist into new data object.
+        if let data = try? Data(contentsOf: path) {
+            //3.when find the items we will decode to CheklistItem data format.
+            let decoder = PropertyListDecoder()
+            do {
+                //4. Load the data
+                items = try decoder.decode([ChecklistItem].self, from: data)
+            } catch {
+                print("Error decoding item array: \(error.localizedDescription)")
+            }
         }
     }
 }
