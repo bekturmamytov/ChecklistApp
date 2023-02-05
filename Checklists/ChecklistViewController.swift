@@ -36,6 +36,11 @@ class ChecklistViewController: UITableViewController {
         item5.text = "Eat ice cream"
         item5.checked = true
         items.append(item5)
+
+        print("DEBUG: Document folder is \(documentsDirectory())")
+        print("DEBUG: Data file path is \(dataFilePath())")
+        
+        
     }
     
     func configureChackmark(for cell: UITableViewCell, with item: ChecklistItem) {
@@ -53,6 +58,7 @@ class ChecklistViewController: UITableViewController {
         let label = cell.viewWithTag(1000) as! UILabel
         label.text = item.text
     }
+    
     
 }
 
@@ -158,6 +164,41 @@ extension ChecklistViewController {
                 //assign to itemToEdit an item inside the items with related indexPath.row.
                 controller.itemToEdit = items[indexPath.row]
             }
+        }
+    }
+}
+
+//MARK: - Get file path and save/load data
+
+extension ChecklistViewController {
+    
+    // Get the file path
+    
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Cheklists.plist")
+    }
+    
+    // Save data
+    func saveChecklistItems() {
+        //1. create encoder to encode the items array
+        let encoder = PropertyListEncoder()
+        //2. error cathching block do/catch
+        do {
+            //3.  try to encode items array by using encoder. if there is any error during the encoding prosses we will catch on //5. 'try' keyword means that call encode can fail and throw an error. in case of fail code excecution will drop to catch block.
+            let data = try encoder.encode(items)
+            //4.if data successfully created then write the data to filePath. write method can throw an error that's why we are using 'try' keyword.
+            try data.write(
+                to: dataFilePath(),
+                options: Data.WritingOptions.atomic)
+            //5. this block will work when do block fails.
+        } catch {
+            //6. handle the catch error.
+            print("Error encoding item array: \(error.localizedDescription)")
         }
     }
 }

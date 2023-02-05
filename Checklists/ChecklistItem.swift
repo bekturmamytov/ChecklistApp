@@ -8,7 +8,7 @@
 import Foundation
 
 //Added NSObject to satisfy equatable req.
-class ChecklistItem: NSObject {
+class ChecklistItem: NSObject, Codable {
     var text = ""
     var checked = false
 }
