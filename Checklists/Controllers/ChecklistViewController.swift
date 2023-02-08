@@ -8,7 +8,7 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController {
-    var items = [ChecklistItem]()
+    
     var checklist: Checklist!
     
     override func viewDidLoad() {
@@ -16,7 +16,7 @@ class ChecklistViewController: UITableViewController {
         
         navigationItem.largeTitleDisplayMode = .never
         //load items from phone memory
-        loadChecklistItem()
+        //loadChecklistItem()
                
         title = checklist.name
     }
@@ -45,13 +45,13 @@ extension ChecklistViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return items.count
+        return checklist.items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
         
-        let item = items[indexPath.row]
+        let item = checklist.items[indexPath.row]
         
         configureText(for: cell, with: item)
         // cell yaratilmadan once cell configure edilmesini saglayan method
@@ -61,12 +61,12 @@ extension ChecklistViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // remove data from the array
-        items.remove(at: indexPath.row)
+        checklist.items.remove(at: indexPath.row)
         //update table view or remove row from the table view
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
         //save data to phone memory or delete
-        saveChecklistItems()
+        //saveChecklistItems()
     }
     
 }
@@ -77,7 +77,7 @@ extension ChecklistViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
-            let item = items[indexPath.row]
+            let item = checklist.items[indexPath.row]
             item.checked.toggle()
             
             configureChackmark(for: cell, with: item)
@@ -86,7 +86,7 @@ extension ChecklistViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         //save data to phone memory
-        saveChecklistItems()
+        //saveChecklistItems()
     }
     
     
@@ -101,9 +101,9 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
     
     func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
         // configure index number in tableview
-        let newRowIndex = items.count
+        let newRowIndex = checklist.items.count
         // add new item to array
-        items.append(item)
+        checklist.items.append(item)
         // add table view new row
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
@@ -111,11 +111,11 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
         //close AddI Items screen
         navigationController?.popViewController(animated: true)
         //save data to phone memory
-        saveChecklistItems()
+        //saveChecklistItems()
     }
     
     func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem) {
-        if let index = items.firstIndex(of: item) {
+        if let index = checklist.items.firstIndex(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
                 configureText(for: cell, with: item)
@@ -123,7 +123,7 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
         }
         navigationController?.popViewController(animated: true)
         //save data to phone memory
-        saveChecklistItems()
+        //saveChecklistItems()
     }
     
     
@@ -149,7 +149,7 @@ extension ChecklistViewController {
             //indexPath() return type is optional thats why we are using if let to unwrap the optional value. Than we are casting sender (Any?) to UITableViewCell.
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 //assign to itemToEdit an item inside the items with related indexPath.row.
-                controller.itemToEdit = items[indexPath.row]
+                controller.itemToEdit = checklist.items[indexPath.row]
             }
         }
     }
@@ -169,7 +169,7 @@ extension ChecklistViewController {
     func dataFilePath() -> URL {
         return documentsDirectory().appendingPathComponent("Cheklists.plist")
     }
-    
+  /*
     // Save data
     func saveChecklistItems() {
         //1. create encoder to encode the items array
@@ -177,7 +177,7 @@ extension ChecklistViewController {
         //2. error cathching block do/catch
         do {
             //3.  try to encode items array by using encoder. if there is any error during the encoding prosses we will catch on //5. 'try' keyword means that call encode can fail and throw an error. in case of fail code excecution will drop to catch block.
-            let data = try encoder.encode(items)
+            let data = try encoder.encode(checklist.items)
             //4.if data successfully created then write the data to filePath. write method can throw an error that's why we are using 'try' keyword.
             try data.write(
                 to: dataFilePath(),
@@ -198,10 +198,11 @@ extension ChecklistViewController {
             let decoder = PropertyListDecoder()
             do {
                 //4. Load the data
-                items = try decoder.decode([ChecklistItem].self, from: data)
+                checklist.items = try decoder.decode([ChecklistItem].self, from: data)
             } catch {
                 print("Error decoding item array: \(error.localizedDescription)")
             }
         }
     }
+   */
 }
