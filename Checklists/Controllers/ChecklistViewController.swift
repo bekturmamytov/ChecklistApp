@@ -9,17 +9,16 @@ import UIKit
 
 class ChecklistViewController: UITableViewController {
     var items = [ChecklistItem]()
+    var checklist: Checklist!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        navigationItem.largeTitleDisplayMode = .never
         //load items from phone memory
         loadChecklistItem()
-        
-//        print("DEBUG: Document folder is \(documentsDirectory())")
-//        print("DEBUG: Data file path is \(dataFilePath())")
-//        
-        
+               
+        title = checklist.name
     }
     
     func configureChackmark(for cell: UITableViewCell, with item: ChecklistItem) {
