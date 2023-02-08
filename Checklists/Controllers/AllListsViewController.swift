@@ -19,7 +19,7 @@ class AllListsViewController: UITableViewController {
         
         // Load data
         loadChecklists()
-        //Test data
+        //Test datas
         
         var list = Checklist(name: "Birthdays")
         lists.append(list)
