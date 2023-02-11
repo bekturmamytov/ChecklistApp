@@ -140,6 +140,7 @@ extension AllListsViewController {
     
     func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        print("DEBUG: \(paths)")
         return paths[0]
     }
     
